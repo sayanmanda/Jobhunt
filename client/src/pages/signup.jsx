@@ -1,9 +1,44 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 // import image from '../assets/image.jpg';
 // import { asyncWrap } from '../utils/asyncWrap';
 // import axios from "axios";
 // import { useAuth } from '../context/authContext';
-export default function signup() {
+export default function Signup() {
+  const history = useNavigate();
+  const [ user, setUser] = useState({
+    fname: "",
+    lname :" ",
+    email:"",
+    password:"",
+   phone :""
+})
+
+const handleChange = e => {
+  const { name, value } = e.target
+  setUser({
+      ...user,
+      [name]: value
+  })
+}
+
+const register = (e) => {
+  e.preventDefault()
+  const { fname, lname ,email, password, phone } = user
+  const data  = [{email :email ,password :password}]
+  if( fname && email && password && phone && lname){
+    localStorage.setItem("user_signup", JSON.stringify(data))
+    history("/login")
+    }
+ else {
+    alert("invlid input")
+}
+
+  
+}
+
+
   return (
     <div className="grid bg-[#F7F7F7] font-[Raleway-Regular]">
       <div className="grid w-[90%] h-[70%] place-self-center lg:grid-cols-[2fr_1fr]">
@@ -101,7 +136,9 @@ export default function signup() {
               <div class="form-group mb-6">
                 <input
                   type="text"
-                  name="first_name"
+                  name="fname" 
+                  value={user.fname}
+                  onChange={ handleChange }
                   class="form-control
           block
           w-full
@@ -125,7 +162,9 @@ export default function signup() {
               <div class="form-group mb-6">
                 <input
                   type="text"
-                  name="last_name"
+                  name="lname" 
+                  value={user.lname}
+                  onChange={ handleChange }
                   class="form-control
           block
           w-full
@@ -151,6 +190,8 @@ export default function signup() {
               <input
                 type="email"
                 name="email"
+                 value={user.email}
+                 onChange={ handleChange }
                 class="form-control block
         w-full
         px-3
@@ -173,6 +214,8 @@ export default function signup() {
               <input
                 type="password"
                 name="password"
+                 value={user.password}
+                 onChange={ handleChange }
                 class="form-control block
         w-full
         px-3
@@ -194,7 +237,9 @@ export default function signup() {
             <div class="form-group mb-6">
               <input
                 type="text"
-                name="phone"
+                name="phone" 
+                value={user.phone}
+                onChange={ handleChange }
                 class="form-control block
         w-full
         px-3
@@ -216,6 +261,7 @@ export default function signup() {
 
             <button
               type="submit"
+              onClick={register}
               class="
       w-full
       px-6

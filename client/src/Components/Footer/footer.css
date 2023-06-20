@@ -1,0 +1,29 @@
+.footer {
+    background: rgb(40, 7, 61);
+    color: #dbe7e2;
+    margin-top: 100px;
+  
+  
+  }
+  
+  .follows span a {
+    text-decoration: none;
+   
+  }
+  
+  .follows span {
+  
+    color: #dbe7e2;
+  }
+  
+  .link__list .link__item {
+    background: transparent;
+    color: #dbe7e2;
+  }
+  
+  .link__list a {
+    text-decoration: none;
+    color: #dbe7e2;
+    font-weight: 500;
+  }
+  
