@@ -1,9 +1,51 @@
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+import { useState } from "react";
 // import axios from 'axios';
 // import {asyncWrap} from '../utils/asyncWrap';
 // import { useAuth } from "../context/authContext";
 export default function Login(){
-  
+    const [ user, setUser] = useState({
+        email:"",
+        password:""
+    })
+ const history =useNavigate();
+    const handleChange = e => {
+        const { name, value } = e.target
+        setUser({
+            ...user,
+            [name]: value
+        })
+    }
+
+    const login = (e) => {
+        
+        e.preventDefault()
+        const {email ,password} = user
+         const x =localStorage.getItem("user_signup")
+           const  y= JSON.parse(x);
+          if((y[0].email)== email && (y[0].password) == password)
+          {
+            alert(" Login Succesful")
+            history("/")
+          }
+          else if((y[0].email)!= email)
+          {
+            alert(" Invalid email ")
+          }
+          else if((y[0].password)!= password)
+          {
+            alert(" Invalid password ")
+          }
+          else{
+            alert(" Invalid details ")
+          }
+
+         
+         
+       
+     
+        
+    }
     return(
         
 <div class="flex flex-wrap w-full">
@@ -22,7 +64,7 @@ export default function Login(){
                                 </path>
                             </svg>
                         </span>
-                        <input type="text" id="design-login-email" class=" flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Email"/>
+                        <input type="text"  name ="email"  value={user.email}   id="design-login-email" class=" flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Email" onChange={handleChange}/>
                         </div>
                     </div>
                     <div class="flex flex-col pt-4 mb-12">
@@ -33,10 +75,10 @@ export default function Login(){
                                     </path>
                                 </svg>
                             </span>
-                            <input type="password" id="design-login-password" class=" flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Password"/>
+                            <input type="password"  name="password" value={user.password} onChange={handleChange}  id="design-login-password" class=" flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Password"/>
                             </div>
                         </div>
-                        <button type="submit" class="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-black shadow-md hover:text-black hover:bg-white focus:outline-none focus:ring-2">
+                        <button type="submit"  onClick={login} class="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-black shadow-md hover:text-black hover:bg-white focus:outline-none focus:ring-2">
                             <span class="w-full">
                                 Submit
                             </span>
@@ -45,7 +87,7 @@ export default function Login(){
                     <div class="pt-12 pb-12 text-center">
                         <p>
                             Don&#x27;t have an account?
-                            <Link href="#" class="font-semibold underline">
+                            <Link to='/signup' class="font-semibold underline">
                                 Register here.
                             </Link>
                         </p>
